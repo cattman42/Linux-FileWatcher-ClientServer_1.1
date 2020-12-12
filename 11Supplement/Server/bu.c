@@ -1,7 +1,4 @@
-                /* LEFT OFF ~64, WORKING ON SETTING UP SERVER DIRECTORY 
-                +++++++++++++++++++++++++++++++++++++++++++++++++++++++
-                ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-                */
+
 #include "csapp.h"
 #include "sys/types.h"
 #include <sys/stat.h>
@@ -63,21 +60,6 @@ int main(int argc, char **argv)
             Rio_writen(connfd, "Processing\n", strlen("Processing\n")); // Write processing
             printf("Sent processing\n");
             filecheck = 0;
-            /** This loop is not necessary. The client just sent you the name
-            of the file, so all you have to do is to concatenate the path
-            with the file name and go directly to the stat() call.
-
-            When you do the stat call you need to check to see if it succeeded.
-            You do this this way:
-
-            if(stat(path,&s) != 0)
-              filecheck = 0;
-            else {
-              filecheck = 1;
-              sprintf(buffer, "%ld\n", s.st_mtime);
-              Rio_writen(connfd, buffer, strlen(buffer));
-            }
-            **/
             while((entp = readdir(DIR))!=NULL) {
                 strcpy(path,argv[1]);
                 strcat(path,"/");
@@ -103,5 +85,3 @@ int main(int argc, char **argv)
     exit(0);
 }
 /* $end echoserverimain */
-
-/** Your grade for this assignment is 40/50. **/
