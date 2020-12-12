@@ -1,7 +1,3 @@
-/*LEFT OFF EDITING BU.C, WAS CREATING DIR SETUP FOR STATUS CHECK
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-*/
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
@@ -48,8 +44,6 @@ void upload(char* request, char* fileName, int size) {
   Rio_writen(clientfd, fileName, strlen(fileName));//Write file name to server
   sprintf(buffer, "%d\n", size);
   Rio_writen(clientfd, buffer, strlen(buffer)); //Write file size
-  /** This is the wrong thing to do. Instead of using the file name here
-      you need to use the full path to the file. **/
   srcfd = Open(fileName, O_RDONLY, 0); 
   srcp = Mmap(0, size, PROT_READ, MAP_PRIVATE, srcfd, 0);
   Close(srcfd);
@@ -74,19 +68,7 @@ int main(int argc, char **argv)
   action.sa_handler = handleTERM;
   sigemptyset(&action.sa_mask);
   action.sa_flags = 0;
-  sigaction(SIGTERM, &action, &old_action);
-
-  /** You are missing something important here.
-      You need a chunk of code here that runs a scan
-      through the directory in question. For each file
-      you encounter you need to send a status request
-      to the server to see if the server has a copy or if
-      the server's copy is older than the copy you have.
-      If either of those things is true, you need to upload a 
-      copy of that file to the server.
-
-      To make this work, you will need to modify your status() 
-      function to return the modification time that the server sends you. **/
+  sigaction(SIGTERM, &acti
 
   /* Open the log file and start watching for changes. **/
   run = 1;
